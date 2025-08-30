@@ -11,6 +11,7 @@ export default function CardGlowBackground() {
     if (!ctx) return;
 
     function resize() {
+      if (!canvas) return;
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
@@ -19,6 +20,7 @@ export default function CardGlowBackground() {
 
     let animationFrameId: number;
     function drawGlow(time: number) {
+      if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       // Center of card (approximate)
       const cardX = canvas.width / 2;

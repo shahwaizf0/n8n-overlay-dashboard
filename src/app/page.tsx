@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Loader2, Send, ChevronDown, ChevronUp, Sparkles } from "lucide-react";
+import { Loader2, Send, ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "sonner";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import CardGlowBackground from "@/components/CardGlowBackground";
@@ -89,9 +89,14 @@ export default function DashboardPage() {
       } else {
         toast.error(`Request failed with status ${res.status}`);
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setHttpStatus(null);
-      const message = String(err?.message ?? err);
+      let message: string;
+      if (err instanceof Error) {
+        message = err.message;
+      } else {
+        message = String(err);
+      }
       setResponseBody(message);
       toast.error(`Network error: ${message}`);
     } finally {
